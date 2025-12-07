@@ -1,9 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for
+from src.dashboard import DashboardController 
+
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('dashboard.html')
+    dashboard_data = DashboardController()
+    dummy_data = dashboard_data.dummyData()
+    return render_template('dashboard.html', data=dummy_data)
 
 @app.route('/expense', methods=['GET', 'POST'])
 def expense():

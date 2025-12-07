@@ -2,100 +2,78 @@
 {% block content %}
 
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-    <!-- Left section - Stats -->
-    <div class="lg:col-span-1">
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-xl font-bold mb-6">Dashboard</h2>
-            
-            <!-- Stat cards -->
-            <div class="space-y-4">
-                <div class="bg-blue-50 p-4 rounded-lg">
-                    <h3 class="text-sm text-gray-600">Gesamtausgaben</h3>
-                    <p class="text-2xl font-bold text-blue-600">€620</p>
-                </div>
-                
-                <div class="bg-green-50 p-4 rounded-lg">
-                    <h3 class="text-sm text-gray-600">Budget Month</h3>
-                    <p class="text-2xl font-bold text-green-600">€820</p>
-                </div>
-                
-                <div class="bg-yellow-50 p-4 rounded-lg">
-                    <h3 class="text-sm text-gray-600">Budget Übrig</h3>
-                    <p class="text-2xl font-bold text-yellow-600">€200</p>
-                </div>
-            </div>
+  <!-- Left section - Stats -->
+  <div class="lg:col-span-1">
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h2 class="text-xl font-bold mb-6">Dashboard</h2>
 
-            <!-- Current expenses -->
-            <div class="mt-8">
-                <h3 class="text-lg font-semibold mb-4">Aktuelle Ausgaben</h3>
-                <div class="space-y-3">
-                    <div class="flex justify-between items-center border-b pb-2">
-                        <span class="text-gray-700">Lebensmittel</span>
-                        <span class="font-semibold">€120</span>
-                    </div>
-                    <div class="flex justify-between items-center border-b pb-2">
-                        <span class="text-gray-700">Transport</span>
-                        <span class="font-semibold">€80</span>
-                    </div>
-                    <div class="flex justify-between items-center border-b pb-2">
-                        <span class="text-gray-700">Kleidung</span>
-                        <span class="font-semibold">€150</span>
-                    </div>
-                    <div class="flex justify-between items-center border-b pb-2">
-                        <span class="text-gray-700">Freizeit</span>
-                        <span class="font-semibold">€270</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Expenses by category -->
-            <div class="mt-8">
-                <h3 class="text-lg font-semibold mb-4">Ausgaben nach Kategorie</h3>
-                <div class="space-y-3">
-                    <div>
-                        <div class="flex justify-between mb-1">
-                            <span class="text-sm">Lebensmittel</span>
-                            <span class="text-sm font-semibold">€150</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="bg-blue-600 h-2 rounded-full" style="width: 30%"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between mb-1">
-                            <span class="text-sm">Transport</span>
-                            <span class="text-sm font-semibold">€80</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="bg-green-600 h-2 rounded-full" style="width: 20%"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between mb-1">
-                            <span class="text-sm">Unterhaltung</span>
-                            <span class="text-sm font-semibold">€200</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="bg-purple-600 h-2 rounded-full" style="width: 75%"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <!-- Stat cards -->
+      <div class="space-y-4">
+        <div class="bg-blue-50 p-4 rounded-lg">
+          <h3 class="text-sm text-gray-600">Gesamtausgaben</h3>
+          <p class="text-2xl font-bold text-blue-600">€{{data['totalExpenses']}}</p>
         </div>
-    </div>
 
-    <!-- Section reserved for future expansion -->
-    <div class="lg:col-span-2">
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-xl font-bold mb-4">General overview</h2>
-            <div class="h-64 flex items-center justify-center text-gray-400">
-                <!-- Here you can add graphics -->
-                <p>Upcoming charts...</p>
-            </div>
+        <div class="bg-green-50 p-4 rounded-lg">
+          <h3 class="text-sm text-gray-600">Budget Month</h3>
+          <p class="text-2xl font-bold text-green-600">€{{data['monthBudget']}}</p>
         </div>
+
+        <div class="bg-yellow-50 p-4 rounded-lg">
+          <h3 class="text-sm text-gray-600">Budget Übrig</h3>
+          <p class="text-2xl font-bold text-yellow-600">€{{data['remainingBudget']}}</p>
+        </div>
+      </div>
+
+      <!-- Current expenses -->
+      <div class="mt-8">
+        <h3 class="text-lg font-semibold mb-4">Aktuelle Ausgaben</h3>
+        <div class="space-y-3">
+
+          {% for value in data.expenses %}
+          <div class="flex justify-between items-center border-b pb-2">
+            <span class="text-gray-700">{{value.name}}</span>
+            <span class="font-semibold">€{{value.amount}}</span>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Expenses by category -->
+      <div class="mt-8">
+        <h3 class="text-lg font-semibold mb-4">Ausgaben nach Kategorie</h3>
+        <div class="space-y-3">
+          {% for value in data.categoriesExpenses %}
+          <div>
+            <div class="flex justify-between mb-1">
+              <span class="text-sm">{{value.name}}</span>
+              <span class="text-sm font-semibold">€{{value.amount}}</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+              <div class="{{value.color}} h-2 rounded-full" style="width: {{value.percentage}}%"></div>
+            </div>
+          </div>
+
+          {% endfor %}
+          
+        </div>
+      </div>
     </div>
+  </div>
+
+  <!-- Section reserved for future expansion -->
+  <div class="lg:col-span-2">
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h2 class="text-xl font-bold mb-4">General overview</h2>
+      <div class="h-64 flex items-center justify-center text-gray-400">
+        <!-- Here you can add graphics -->
+        <p>Upcoming charts...</p>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}
 
 </body>
+
 </html>
