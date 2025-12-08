@@ -6,11 +6,12 @@ from src.category import CategoryController
 app = Flask(__name__)
 expenses = []
 budget = 0
+category_controller = CategoryController()
 
 @app.route('/')
 def home():
     dashboard_data = DashboardController()
-    dummy_data = dashboard_data.dummyData()
+    dummy_data = dashboard_data.dummyData(budget)
     return render_template('dashboard.html', data=dummy_data)
 
 @app.route('/expense', methods=['GET', 'POST'])
@@ -39,19 +40,40 @@ def reports():
     card_data = report_data.displaySummaryCards()
     return render_template('reports.html', data=card_data)
 
+
+
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
-    create_category = CategoryController() 
-    categories = create_category.getCategories()
+    global budget
+    categories = category_controller.getCategories()
 
     if request.method == 'POST':
         monthly_budget = request.form.get('monthly_budget')
-        budget.append(monthly_budget)
+        if monthly_budget:
+            budget = float(monthly_budget)
     return render_template('settings.html', budget=budget, data=categories)
 
-@app.route('/settings/category')
-def editCategory():
-    return render_template('category.html')
+
+
+@app.route('/settings/category/<category_name>', methods=['GET', 'POST'])
+def editCategory(category_name):
+
+    if request.method == 'POST':
+       name = request.form.get("name")
+       color = request.form.get("color")
+       limit = request.form.get("limit")
+
+       print(f"   search: {category_name}")
+       print(f"   new value: name={name}, color={color}, limit={limit}")
+
+       category_controller.updateCategory(category_name, name, color, limit)
+       return redirect(url_for('settings'))
+    
+    category = category_controller.getCategoryByName(category_name)
+    if not category:
+        return redirect(url_for('settings'))   
+    
+    return render_template('edit_category.html', category=category )
 
 if __name__ == '__main__':
     app.run(debug=True)
