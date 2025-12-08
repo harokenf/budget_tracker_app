@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <!-- Bouton retour -->
+    <div class="flex items-center mb-6">
+        <a href="/settings" class="text-gray-600 hover:text-gray-900 mr-4">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                    d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+            </svg>
+        </a>
+        <h1 class="text-3xl font-bold">Kategorie bearbeiten</h1>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <form method="POST" action="/settings/category/{{ category.name }}">
+            
+            <!-- Get category name -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Kategoriename*
+                </label>
+                <input type="hidden" 
+                    name="name"
+                    value="{{ category.name }}"
+                    required
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+            </div>
+
+            <!-- Get color -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Farbe*
+                </label>
+                <div class="flex items-center space-x-4">
+                    <input type="color" 
+                        name="color"
+                        value="{{ category.color }}"
+                        required
+                        readonly
+                        class="h-12 w-20 border border-gray-300 rounded-lg cursor-pointer">
+                    <span class="text-gray-600">{{ category.color }}</span>
+                </div>
+            </div>
+
+            <!-- Define limit  -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Budget-Limit (€)*
+                </label>
+                <input type="number" 
+                    name="limit"
+                    value="{{ category.limit if category.limit > 0 else '' }}"
+                    step="0.01"
+                    min="0"
+                    required
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                    placeholder="z.B. 400.00">
+                
+                {% if category.limit == 0 %}
+                <p class="mt-2 text-sm text-orange-600">
+                     Kein Limit festgelegt
+                </p>
+                {% else %}
+                <p class="mt-2 text-sm text-green-600">
+                    Aktuelles Limit: €{{category.limit}}
+                </p>
+                {% endif %}
+            </div>
+
+
+            <!-- BOUTONS -->
+            <div class="flex space-x-4">
+                <button type="submit" 
+                    class="flex-1 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition font-medium">
+                    Speichern
+                </button>
+                <a href="/settings" 
+                    class="flex-1 bg-gray-200 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-300 transition font-medium text-center">
+                    Abbrechen
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
