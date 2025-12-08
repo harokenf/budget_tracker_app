@@ -9,6 +9,8 @@ class CategoryController:
             {"id": 6, "name": "Reisen", "color": "#06B6D4", "limit": 0.00},
             {"id": 7, "name": "Unterhaltung", "color": "#F97316", "limit": 0.00},
             {"id": 8, "name": "Allgemeines Sparen", "color": "#2B323F", "limit": 0.00},
+            {"id": 9, "name": "Sonstiges", "color": "#CACFD7", "limit": 0.00},
+
         ]
 
     def getCategories(self):
