@@ -1,8 +1,8 @@
 class DashboardController :
-    def dummyData(self):
+    def dummyData(self, budget):
         return {
             "totalExpenses" : 625,
-            "monthBudget" : 850,
+            "monthBudget" : budget,
             "remainingBudget" : 200,
             "expenses": [
                 {"name":"Kleidung", "amount": 150},
