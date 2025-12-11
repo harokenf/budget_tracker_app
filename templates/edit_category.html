@@ -14,17 +14,16 @@
     </div>
 
     <div class="bg-white rounded-lg shadow-md p-6">
-        <form method="POST" action="/settings/category/{{ category.name }}">
+        <form method="POST" action="/settings/category/{{ category.get_name() }}">
             
             <!-- Get category name -->
             <div class="mb-6">
                 <label class="block text-sm font-medium text-gray-700 mb-2">
                     Kategoriename*
                 </label>
-                <input type="hidden" 
+                <input disabled
                     name="name"
-                    value="{{ category.name }}"
-                    required
+                    value="{{ category.get_name() }}"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg">
             </div>
 
@@ -35,12 +34,11 @@
                 </label>
                 <div class="flex items-center space-x-4">
                     <input type="color" 
+                        disabled
                         name="color"
-                        value="{{ category.color }}"
-                        required
-                        readonly
+                        value="{{ category.get_color() }}"
                         class="h-12 w-20 border border-gray-300 rounded-lg cursor-pointer">
-                    <span class="text-gray-600">{{ category.color }}</span>
+                    <span class="text-gray-600">{{ category.get_color() }}</span>
                 </div>
             </div>
 
@@ -50,21 +48,21 @@
                     Budget-Limit (€)*
                 </label>
                 <input type="number" 
-                    name="limit"
-                    value="{{ category.limit if category.limit > 0 else '' }}"
+                    name="max_amount"
+                    value="{{ category.get_max_amount() if category.get_max_amount() > 0 else '' }}"
                     step="0.01"
                     min="0"
                     required
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     placeholder="z.B. 400.00">
                 
-                {% if category.limit == 0 %}
+                {% if category.get_max_amount() == 0 %}
                 <p class="mt-2 text-sm text-orange-600">
                      Kein Limit festgelegt
                 </p>
                 {% else %}
                 <p class="mt-2 text-sm text-green-600">
-                    Aktuelles Limit: €{{category.limit}}
+                    Aktuelles Limit: €{{category.get_max_amount()}}
                 </p>
                 {% endif %}
             </div>

@@ -45,15 +45,15 @@
                     <div
                         class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
                         <div class="flex items-center space-x-4">
-                            <div class="w-6 h-6 rounded-lg" style="background-color: {{category['color']}};"></div>
+                            <div class="w-6 h-6 rounded-lg" style="background-color: {{category.get_color()}};"></div>
                             <div>
-                                <p class="font-medium">{{category['name']}}</p>
-                                <p class="text-sm text-gray-500">€{{category['limit']}}</p>
+                                <p class="font-medium">{{category.get_name()}}</p>
+                                <p class="text-sm text-gray-500">€{{category.get_max_amount()}}</p>
                             </div>
                         </div>
 
-                        <a href="/settings/category/{{category['name']}}">
-                            <button type="button" onclick="editCategory({{category['name']}})"
+                        <a href="/settings/category/{{category.get_name()}}">
+                            <button type="button"
                                 class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
