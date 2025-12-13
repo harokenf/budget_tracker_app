@@ -45,7 +45,8 @@
                     <div
                         class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
                         <div class="flex items-center space-x-4">
-                            <div class="w-6 h-6 rounded-lg" style="background-color: {{category.get_color()}};"></div>
+                            <div class="w-6 h-6 rounded-lg" style="--color: {{ category.get_color() }};"></div>
+
                             <div>
                                 <p class="font-medium">{{category.get_name()}}</p>
                                 <p class="text-sm text-gray-500">€{{category.get_max_amount()}}</p>
